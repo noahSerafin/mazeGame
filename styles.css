@@ -1,0 +1,33 @@
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#game-board{
+    background-color: lightgray;
+    width: 100vmin;
+    height: 100vmin;
+    display: grid;
+    grid-template-rows: repeat(15, 1fr);
+    grid-template-columns: repeat(15, 1fr);
+}
+.player{
+    background-color: lightseagreen;
+}
+.wall{
+    background-color: gray;
+}
+.finish{
+    background-color: yellow;
+}
+.doorClosed{
+    background-color: red;   
+}
+.doorOpen{
+    background-color: tomato;
+}

@@ -1,0 +1,15 @@
+I wanted to make a maze that could not be solved with any simple maze solving straegies, such as following one wall until the goal. To achieve this I've used colour coded doors that switch between open and closed when the player passes them, meaning the player can trap themselves in a space or block themselves from the exit.
+
+The maze is a simple 2D array of numbers with each number corresponding to a different tile type:
+
+0 - path
+1 - red open door
+2 - blue open door
+3 - green open door
+4 - wall
+5 - red closed door
+6 - blue closed door
+7 - green closed door
+
+When the maze is loaded the player and goal are appended to the game board at indexes 1, 0 and length, length -1 respectively.
+When the player hits a wasd key, the player object attempts to move into the corresponding space, if the value of the indexed position is lower than 4, the player moves. If the space is an open door, the player is automatically moved again in the same direction and the open door is replaced with a closed one of the same colour. At the same time all closed doors of that colour switch to open.

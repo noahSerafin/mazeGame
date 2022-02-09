@@ -7,6 +7,10 @@ const startButton = document.getElementById("start");
 const loadLevel2 = document.getElementById("load2");
 const loadLevel3 = document.getElementById("load3");
 //const loadLevel4 = document.getElementById("load4");
+const up = document.getElementById("up");
+const down = document.getElementById("down");
+const left = document.getElementById("left");
+const right = document.getElementById("right");
 
 var maze = [
     [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
@@ -126,6 +130,11 @@ document.onkeydown = function (e) {
     Move(input)
        
 }
+//button inputs
+up.addEventListener("click", () => {Move("up")})
+down.addEventListener("click", () => {Move("down")})
+left.addEventListener("click", () => {Move("left")})
+right.addEventListener("click", () => {Move("right")})
 
 //move player if valid
 function Move(input){
@@ -258,7 +267,7 @@ function switchGreenDoors(tile){
 startButton.addEventListener('click', ()=> {reDraw(level1, player)});
 loadLevel2.addEventListener('click', () => {reDraw(level2, player)});
 loadLevel3.addEventListener('click',()=> {reDraw(level3, player)});
-loadLevel4.addEventListener('click',()=> {setLevel(4)});
+//loadLevel4.addEventListener('click',()=> {setLevel(4)});
 
 //draw the maze
 function draw(gameBoard, player){

@@ -2,19 +2,29 @@ header{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 45%;
+    width: 50%;
     margin: auto;
 }
-main{
+button{
+    padding: 5px;
+    margin: 5px;
+}
+.instructions {
+    width: 100vmin;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+}
+.control-up{
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 #game-board{
     background-color: lightgray;
     width: 100vmin;
     height: 100vmin;
-    display: grid;      
+    display: grid;
+    margin: auto;
 }
 .player{
     background-color: lightseagreen;

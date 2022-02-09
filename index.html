@@ -9,10 +9,7 @@
 </head>
 <body>
     <header>
-        <h1>Door Maze</h1>
-        <div>
-            Steps: <div id="counter"></div>
-        </div>
+        <h1>Door Maze</h1>        
         <div>
             <button id="start">Level 1</button>
             <button id="load2">Level 2</button>
@@ -21,6 +18,21 @@
     </header>
     
     <main>
+        <div class="instructions">
+            <h4>WASD to move, or:</h4>
+            <div class="controls">
+                <div class="control-up">
+                    <button id="up">^</button>
+                </div>               
+                <button id="left"><</button>
+                <button id="down">v</button>
+                <button id="right">></button>                
+            </div>
+            <div>
+                Steps: <div id="counter"></div>
+            </div>
+        </div>
+        
         <div id= "game-board"></div>
     </main>
 

@@ -1,7 +1,9 @@
 header{
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    width: 45%;
+    margin: auto;
 }
 main{
     display: flex;
@@ -12,9 +14,7 @@ main{
     background-color: lightgray;
     width: 100vmin;
     height: 100vmin;
-    display: grid;
-    grid-template-rows: repeat(15, 1fr);
-    grid-template-columns: repeat(15, 1fr);
+    display: grid;      
 }
 .player{
     background-color: lightseagreen;
@@ -25,9 +25,21 @@ main{
 .finish{
     background-color: yellow;
 }
-.doorClosed{
+.redDoorClosed{
     background-color: red;   
 }
-.doorOpen{
+.redDoorOpen{
     background-color: tomato;
+}
+.blueDoorClosed{
+    background-color: blue;   
+}
+.blueDoorOpen{
+    background-color: lightskyblue;
+}
+.greenDoorClosed{
+    background-color: green;   
+}
+.greenDoorOpen{
+    background-color: lightgreen;
 }

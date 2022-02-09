@@ -1,41 +1,91 @@
 //global variables
-var doorsInverted = false;
-
 const gameBoard = document.getElementById("game-board");
+var stepCount = 0;
 
-let lastRenderTime = 0;
-
+const stepCounter = document.getElementById("counter");
 const startButton = document.getElementById("start");
-
-
-
-/*function gameLoop(currentTime){
-    window.requestAnimationFrame(gameLoop)
-    lastRenderTime = currentTime
-
-    update()
-    draw()
-}*/
+const loadLevel2 = document.getElementById("load2");
+const loadLevel3 = document.getElementById("load3");
+//const loadLevel4 = document.getElementById("load4");
 
 var maze = [
-    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-    [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 2],    
-    [2, 2, 2, 2, 0, 2, 3, 2, 0, 0, 2, 2, 2, 2, 2],    
-    [2, 0, 0, 2, 0, 2, 0, 2, 2, 2, 0, 0, 0, 0, 2], 
-    [2, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 2, 2, 2],
-    [2, 0, 2, 2, 2, 2, 2, 2, 0, 2, 2, 0, 1, 0, 2],
-    [2, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 2, 0, 2],
-    [2, 2, 3, 2, 2, 0, 2, 0, 2, 2, 0, 2, 2, 0, 2], 
-    [2, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 2],
-    [2, 0, 2, 0, 0, 2, 2, 2, 2, 0, 0, 3, 0, 0, 2], 
-    [2, 0, 2, 2, 0, 0, 3, 0, 0, 0, 2, 2, 2, 2, 2], 
-    [2, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 2],  
-    [2, 2, 3, 2, 0, 2, 2, 0, 0, 0, 3, 2, 2, 2, 2],
-    [2, 0, 0, 2, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0],    
-    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+    [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+    [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 4],    
+    [4, 4, 4, 4, 0, 4, 5, 4, 0, 0, 4, 4, 4, 4, 4],    
+    [4, 0, 0, 4, 0, 4, 0, 4, 4, 4, 0, 0, 0, 0, 4], 
+    [4, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 4, 4, 4],
+    [4, 0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 0, 1, 0, 4],
+    [4, 0, 0, 0, 0, 0, 1, 0, 0, 4, 0, 0, 4, 0, 4],
+    [4, 4, 5, 4, 4, 0, 4, 0, 4, 4, 0, 4, 4, 0, 4], 
+    [4, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 4, 0, 0, 4],
+    [4, 0, 4, 0, 0, 4, 4, 4, 4, 0, 0, 5, 0, 0, 4], 
+    [4, 0, 4, 4, 0, 0, 5, 0, 0, 0, 4, 4, 4, 4, 4], 
+    [4, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 4],  
+    [4, 4, 5, 4, 0, 4, 4, 0, 0, 0, 5, 4, 4, 4, 4],
+    [4, 0, 0, 4, 0, 4, 0, 0, 4, 4, 0, 0, 0, 0, 0],    
+    [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
+]
+const level1 = [
+    [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+    [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 4],    
+    [4, 4, 4, 4, 0, 4, 5, 4, 0, 0, 4, 4, 4, 4, 4],    
+    [4, 0, 0, 4, 0, 4, 0, 4, 4, 4, 0, 0, 0, 0, 4], 
+    [4, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 4, 4, 4],
+    [4, 0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 0, 1, 0, 4],
+    [4, 0, 0, 0, 0, 0, 1, 0, 0, 4, 0, 0, 4, 0, 4],
+    [4, 4, 5, 4, 4, 0, 4, 0, 4, 4, 0, 4, 4, 0, 4], 
+    [4, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 4, 0, 0, 4],
+    [4, 0, 4, 0, 0, 4, 4, 4, 4, 0, 0, 5, 0, 0, 4], 
+    [4, 0, 4, 4, 0, 0, 5, 0, 0, 0, 4, 4, 4, 4, 4], 
+    [4, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 4],  
+    [4, 4, 5, 4, 0, 4, 4, 0, 0, 0, 5, 4, 4, 4, 4],
+    [4, 0, 0, 4, 0, 4, 0, 0, 4, 4, 0, 0, 0, 0, 0],    
+    [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
+]
+const level2 = [
+    [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+    [0, 0, 0, 0, 0, 0, 2, 0, 5, 0, 5, 0, 0, 0, 4],    
+    [4, 0, 4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4, 0, 4],  
+    [4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 2, 0, 4], 
+    [4, 1, 4, 0, 4, 4, 4, 0, 4, 4, 4, 0, 4, 0, 4],
+    [4, 0, 4, 0, 1, 0, 0, 0, 0, 1, 0, 0, 4, 0, 4],
+    [4, 0, 4, 4, 4, 4, 4, 1, 4, 4, 0, 4, 4, 0, 4],
+    [4, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 5, 0, 4], 
+    [4, 4, 4, 4, 0, 4, 4, 2, 4, 4, 2, 4, 4, 6, 4],
+    [4, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4], 
+    [4, 0, 4, 4, 4, 0, 4, 4, 4, 6, 4, 4, 4, 0, 4], 
+    [4, 0, 0, 0, 6, 0, 4, 0, 0, 0, 0, 4, 0, 0, 4],  
+    [4, 4, 0, 4, 4, 0, 6, 0, 4, 4, 4, 4, 1, 4, 4],
+    [4, 0, 0, 1, 0, 0, 4, 0, 1, 0, 0, 0, 0, 0, 0],    
+    [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
+]
+
+const level3 = [
+    [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+    [0, 0, 1, 0, 2, 0, 3, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 4],    
+    [4, 0, 4, 5, 4, 6, 4, 7, 4, 5, 4, 4, 0, 4, 0, 4, 0, 4],    
+    [4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 0, 0, 2, 0, 0, 4],    
+    [4, 0, 4, 0, 0, 0, 3, 0, 1, 0, 4, 0, 4, 4, 0, 4, 0, 4],    
+    [4, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 4, 0, 0, 4, 0, 4],    
+    [4, 0, 0, 4, 0, 0, 0, 4, 0, 0, 4, 4, 4, 0, 0, 0, 0, 4],    
+    [4, 0, 4, 4, 4, 4, 0, 4, 0, 4, 4, 0, 0, 0, 4, 4, 0, 4],    
+    [4, 0, 0, 4, 0, 0, 5, 0, 0, 0, 0, 4, 0, 4, 0, 4, 0, 4],    
+    [4, 4, 6, 4, 4, 0, 0, 4, 7, 4, 0, 6, 0, 3, 0, 4, 3, 4],    
+    [4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 0, 4, 0, 4, 0, 0, 0, 4],    
+    [4, 0, 4, 0, 4, 0, 0, 4, 6, 4, 2, 4, 0, 4, 6, 4, 4, 4],    
+    [4, 0, 0, 0, 4, 3, 4, 4, 0, 0, 0, 4, 5, 4, 0, 1, 0, 4],    
+    [4, 0, 0, 4, 4, 0, 0, 0, 4, 0, 4, 0, 0, 4, 0, 4, 0, 4],    
+    [4, 4, 0, 0, 0, 4, 2, 4, 4, 0, 2, 0, 4, 4, 0, 4, 0, 4],
+    [4, 0, 0, 4, 0, 5, 0, 0, 0, 0, 4, 0, 7, 0, 0, 4, 0, 0],
+    [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
 ]
 
 //player variables
+
+const playerStart = {
+    x: 1,
+    y: 2
+};
 
 var player = {      
     x: 1,
@@ -43,17 +93,8 @@ var player = {
     //score: 0
 };
 
-var finish = {
-    x: 15,
-    y: 14
-};
-
-/*var controller = {
-    left: false,
-    right: false,
-    up: false,
-    down: false
-};*/
+//on load
+draw(gameBoard, player);
 
 var input;
 
@@ -88,151 +129,210 @@ document.onkeydown = function (e) {
 
 //move player if valid
 function Move(input){
-    if(input == "left" && player.x > 1 && maze[player.y -1][player.x-2] <= 1)
+    if(input == "left" && player.x > 1 && maze[player.y -1][player.x-2] <= 3)
     {           
         player.x -= 1
-        //console.log(player.x)
+        stepCount += 1;
         if(maze[player.y -1][player.x-1] == 1){
-            invertDoors();
+            invertDoors("red");
             Move("left")
-        }        
+        } else if(maze[player.y -1][player.x-1] == 2){
+            invertDoors("blue");
+            Move("left")
+        } else if(maze[player.y -1][player.x-1] == 3){
+            invertDoors("green");
+            Move("left")
+        }       
     }
-    if(input == "right"  && player.x < 15  && maze[player.y -1][player.x] <= 1)
+    if(input == "right"  && player.x < maze[0].length  && maze[player.y -1][player.x] <= 3)
     {
         player.x += 1
-        //console.log(player.x)        
+        stepCount += 1;
         if(maze[player.y -1][player.x-1] == 1){            
             Move("right")            
-            invertDoors();
+            invertDoors("red");
+        } else if(maze[player.y -1][player.x-1] == 2){
+            invertDoors("blue");
+            Move("right")
+        } else if(maze[player.y -1][player.x-1] == 3){
+            invertDoors("green");
+            Move("right")
         }
     }
-    if(input == "up" && player.y > 1  && maze[player.y -2][player.x-1] <= 1)
+    if(input == "up" && player.y > 1  && maze[player.y -2][player.x-1] <= 3)
     {
         player.y -= 1
-        //console.log(player.y)
+        stepCount += 1;
         if(maze[player.y -1][player.x-1] == 1){
-            invertDoors();
+            invertDoors("red");
+            Move("up")
+        } else if(maze[player.y -1][player.x-1] == 2){
+            invertDoors("blue");
+            Move("up")
+        } else if(maze[player.y -1][player.x-1] == 3){
+            invertDoors("green");
             Move("up")
         }
     }
-    if(input == "down" && player.y < 15 && maze[player.y][player.x-1] <= 1)
+    if(input == "down" && player.y < maze.length && maze[player.y][player.x-1] <= 3)
     {
         player.y += 1
-        //console.log(player.y)
+        stepCount += 1;
         if(maze[player.y -1][player.x-1] == 1){
-            invertDoors();
+            invertDoors("red");
+            Move("down")
+        } else if(maze[player.y -1][player.x-1] == 2){
+            invertDoors("blue");
+            Move("down")
+        } else if(maze[player.y -1][player.x-1] == 3){
+            invertDoors("green");
             Move("down")
         }
     }
 
     draw(gameBoard, player)
     //console.log(`${player.x} ${player.y}`)
-    if(player.x == finish.x && player.y == finish.y){
-        alert("Level Complete")
+    if(player.x == maze[0].length && player.y == maze.length-1){
+        alert(`Level Complete! You took ${stepCount} steps`)
         console.log("You Win!")
     }
 
 }
 
-function invertDoors(){
+function invertDoors(color){
     console.log("inverting doors")
   
-    maze = maze.map(row => {
-        return row.map(tile => {            
-            return switchDoors(tile)
+    if (color == "red"){
+        console.log("red switch")
+        maze = maze.map(row => {
+            return row.map(tile => {            
+                return switchRedDoors(tile)
+            })
+        })   
+    } else if (color == "blue") {
+        console.log("blue switch")
+        maze = maze.map(row => {
+            return row.map(tile => {            
+                return switchBlueDoors(tile)
+            })
         })
-    })   
-      
+    } else if (color == "green") {
+        console.log("green switch")
+        maze = maze.map(row => {
+            return row.map(tile => {            
+                return switchGreenDoors(tile)
+            })
+        })
+    }     
 }
 
 
-function switchDoors(tile){    
+function switchRedDoors(tile){    
         if(tile === 1){
-            return 3            
-        } else if (tile === 3){
+            return 5            
+        } else if (tile === 5){
             return 1
         } else {
             return tile
         }   
 }
+function switchBlueDoors(tile){    
+    if(tile === 2){
+        return 6            
+    } else if (tile === 6){
+        return 2
+    } else {
+        return tile
+    }   
+}
+function switchGreenDoors(tile){    
+    if(tile === 3){
+        return 7           
+    } else if (tile === 7){
+        return 3
+    } else {
+        return tile
+    }   
+}
 
-startButton.addEventListener('click', draw(gameBoard, player));
+startButton.addEventListener('click', ()=> {reDraw(level1, player)});
+loadLevel2.addEventListener('click', () => {reDraw(level2, player)});
+loadLevel3.addEventListener('click',()=> {reDraw(level3, player)});
+loadLevel4.addEventListener('click',()=> {setLevel(4)});
 
 //draw the maze
 function draw(gameBoard, player){
     
-    gameBoard.innerHTML = ''
-
-    //if(doorsInverted == false){
+    gameBoard.innerHTML = '';
+    gameBoard.style.gridTemplateRows = "repeat(maze[0].length, 1fr);"
+    gameBoard.style.gridTemplateColumns = "repeat(maze.length, 1fr);"
+    stepCounter.innerHTML = stepCount;
+    
         for (let row = 0; row< maze.length; row++) {
             for (let column = 0; column < maze[row].length; column++){
                 const tile = maze[row][column];                       
                 //console.log(tile)
                 switch(tile){                
-                    case 1:
-                        const doorOpen = document.createElement('div')
-                        doorOpen.style.gridRowStart = row +1
-                        doorOpen.style.gridColumnStart = column +1
-                        doorOpen.classList.add('doorOpen')
-                        gameBoard.appendChild(doorOpen)
+                    case 1:                        
+                        const redDoorOpen = document.createElement('div')
+                        redDoorOpen.style.gridRowStart = row +1
+                        redDoorOpen.style.gridColumnStart = column +1
+                        redDoorOpen.classList.add('redDoorOpen')
+                        gameBoard.appendChild(redDoorOpen)
                         break;
                     case 2:
+                        const blueDoorOpen = document.createElement('div')
+                        blueDoorOpen.style.gridRowStart = row +1
+                        blueDoorOpen.style.gridColumnStart = column +1
+                        blueDoorOpen.classList.add('blueDoorOpen')
+                        gameBoard.appendChild(blueDoorOpen)
+                        break; 
+                    case 3:
+                        const greenDoorOpen = document.createElement('div')
+                        greenDoorOpen.style.gridRowStart = row +1
+                        greenDoorOpen.style.gridColumnStart = column +1
+                        greenDoorOpen.classList.add('greenDoorOpen')
+                        gameBoard.appendChild(greenDoorOpen)
+                        break;        
+                    case 4:
                         const wall = document.createElement('div')
                         wall.style.gridRowStart = row +1
                         wall.style.gridColumnStart = column +1
                         wall.classList.add('wall')
                         gameBoard.appendChild(wall)
                         break;
-                    case 3:
-                        const doorClosed = document.createElement('div')
-                        doorClosed.style.gridRowStart = row +1
-                        doorClosed.style.gridColumnStart = column +1
-                        doorClosed.classList.add('doorClosed')
-                        gameBoard.appendChild(doorClosed)
+                    case 5:
+                        const redDoorClosed = document.createElement('div')
+                        redDoorClosed.style.gridRowStart = row +1
+                        redDoorClosed.style.gridColumnStart = column +1
+                        redDoorClosed.classList.add('redDoorClosed')
+                        gameBoard.appendChild(redDoorClosed)
+                        break;
+                    case 6:
+                        const blueDoorClosed = document.createElement('div')
+                        blueDoorClosed.style.gridRowStart = row +1
+                        blueDoorClosed.style.gridColumnStart = column +1
+                        blueDoorClosed.classList.add('blueDoorClosed')
+                        gameBoard.appendChild(blueDoorClosed)
+                        break;
+                    case 7:
+                        const greenDoorClosed = document.createElement('div')
+                        greenDoorClosed.style.gridRowStart = row +1
+                        greenDoorClosed.style.gridColumnStart = column +1
+                        greenDoorClosed.classList.add('greenDoorClosed')
+                        gameBoard.appendChild(greenDoorClosed)
                         break;
                     case 0:
                         //image = path.jpeg;
                 }        
             }
         }
-    /*} else if (doorsInverted == true){
-        for (let row = 0; row< invertedMaze.length; row++) {
-            for (let column = 0; column < invertedMaze[row].length; column++){
-                const tile = invertedMaze[row][column];                       
-                //console.log(tile)
-                switch(tile){                
-                    case 1:
-                        const doorOpen = document.createElement('div')
-                        doorOpen.style.gridRowStart = row +1
-                        doorOpen.style.gridColumnStart = column +1
-                        doorOpen.classList.add('doorOpen')
-                        gameBoard.appendChild(doorOpen)
-                        break;
-                    case 2:
-                        const wall = document.createElement('div')
-                        wall.style.gridRowStart = row +1
-                        wall.style.gridColumnStart = column +1
-                        wall.classList.add('wall')
-                        gameBoard.appendChild(wall)
-                        break;
-                    case 3:
-                        const doorClosed = document.createElement('div')
-                        doorClosed.style.gridRowStart = row +1
-                        doorClosed.style.gridColumnStart = column +1
-                        doorClosed.classList.add('doorClosed')
-                        gameBoard.appendChild(doorClosed)
-                        break;
-                    case 0:
-                        //image = path.jpeg;
-                }
-            }
-        }
-    } */
+    
 
     //draw goal
     const end = document.createElement('div')
-    end.style.gridRowStart = finish.y    
-    end.style.gridColumnStart = finish.x
+    end.style.gridRowStart = maze.length-1
+    end.style.gridColumnStart = maze[0].length
     end.classList.add('finish')
     gameBoard.appendChild(end)
 
@@ -245,9 +345,14 @@ function draw(gameBoard, player){
     gameBoard.appendChild(playerSquare)
 }
 
-function reDraw(gameBoard, player, playerSquare){
-    playerSquare.style.gridRowStart = player.y    
-    playerSquare.style.gridColumnStart = player.x
+//change this so it can load new levels
+function reDraw(level, player){
+    console.log("loading level ", level)
+    stepCount = 0;
+    player.x = 1;   
+    player.y = 2;
+    maze = level;
+    draw(gameBoard, player)    
 }
 
 //console.log(`${finish.x} ${finish.y}`)

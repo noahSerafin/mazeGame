@@ -1,0 +1,86 @@
+header{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 50%;
+    margin: auto;
+}
+button{
+    padding: 5px;
+    margin: 5px;
+}
+.instructions {
+    width: 100vmin;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+}
+.control-up{
+    display: flex;
+    justify-content: center;
+}
+#game-board{
+   
+    width: 90vmin;
+    height: 90vmin;
+    display: flex;
+    flex-wrap: wrap;
+}
+#game-board:nth-child(2n){
+    
+}
+.board__row:nth-child(2n){
+
+}
+.player{
+    background-color: lightseagreen;
+}
+.wall, .corner{
+    background-color: gray;
+}
+.horizontal{
+    height: 10px;
+    width: 40px;
+}
+.vertical{
+    width: 10px;
+    height: 40px;
+}
+.corner{
+    height: 10px;
+    width: 10px;
+}
+.finish{
+    background-color: yellow;
+}
+.redDoorClosed{
+    background-color: red;   
+}
+.redDoorOpen{
+    background-color: tomato;
+}
+.blueDoorClosed{
+    background-color: blue;   
+}
+.blueDoorOpen{
+    background-color: lightskyblue;
+}
+.greenDoorClosed{
+    background-color: green;   
+}
+.greenDoorOpen{
+    background-color: lightgreen;
+}
+
+.path{
+    width: 40px;
+    height: 40px;
+    background-color: lightgray;
+}
+.tile{
+    border: 1px dotted red;
+  
+}
+.tile:nth-child(2n){
+ 
+}

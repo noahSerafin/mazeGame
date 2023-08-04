@@ -12,6 +12,21 @@ const down = document.getElementById("down");
 const left = document.getElementById("left");
 const right = document.getElementById("right");
 
+var strMaze = [
+    ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
+    ['|', '0', '0', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|'],
+    ['+', '0', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
+    ['|', '0', '0', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|'],
+    ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
+    ['|', '0', '0', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|'], 
+    ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
+    ['|', '0', '0', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|'],  
+    ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
+    ['|', '0', '0', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|'], 
+    ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
+    ['|', '0', '0', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|'],
+    ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+']
+]
 /*var maze = [
     ['+', '-', '+', '-', '+', '-', '+', '-', '+'],
     ['|', 0, '|', 0, '|', 0, '|', 0, '|'],
@@ -25,19 +40,34 @@ const right = document.getElementById("right");
 ]*/
 var maze = [
     ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', 0, 0, 0, '|', 0, '|', 0, '|', 0, '|', 0, '|'],
-    ['+', 0, '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|'],
-    ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|'],
-    ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|'],
-    ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|'],
-    ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|'],
+    ['|', 0, 0, 0, 0, 0, 0, 0, 0, 0, '|', 0, '|'],
+    ['+', 0, '+', 6, '+', 2, '+', '-', '+', 0, '+', '-', '+'],
+    ['|', 0, '|', 0, '|', 0, '|', 0, '|', 0, 0, 0, '|'],
+    ['+', 1, '+', '-', '+', 0, '+', 0, '+', '-', '+', 0, '+'],
+    ['|', 0, 0, 0, '0', 0, '0', 0, '|', 0, 0, 0, '|'],
+    ['+', 0, '+', 0, '+', 0, '+', '-', '+', 0, '+', '-', '+'],
+    ['|', 0, '|', 0, '|', 0, 6, 0, 0, 0, 0, 0, '|'],
+    ['+', 0, '+', 0, '+', 0, '+', 0, '+', '-', '+', 0, '+'],
+    ['|', 0, 7, 0, 0, 0, '|', 0, 0, 0, 3, 0, '|'],
+    ['+', 5, '+', '-', '+', 0, '+', 0, '+', '-', '+', '-', '+'],
+    ['|', 0, '|', 0, '|', 0, 0, 0, 0, 0, 0, 0, '|'],
     ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+']
 ]
+/*const mazeFromStr = () => {
+    var newMaze = strMaze;
+    for (let row = 0; row< strMaze.length; row++) {
+        for (let column = 0; column < strMaze[row].length; column++){
+            var tile = strMaze[row][column];
+            if(Number(tile) !== NaN){
+               newMaze[row][column] = Number(tile)
+               console.log(tile)
+               console.log(Number(tile))
+            }
+        }    
+    }
+   return(newMaze)
+}
+var maze = mazeFromStr();*/
 
 //player variables
 var player = {      
@@ -90,67 +120,55 @@ right.addEventListener("click", () => {Move("right")})
 
 //move player if valid
 const Move = (input) => {
-    debug()
+   
     maze[player.y][player.x] = 0
     if(input == "left" && maze[player.y][player.x-1] <= 3 && maze[player.y][player.x-2] == 0)
     {           
-        player.x -= 2
-        stepCount += 1;
-        if(maze[player.y -1][player.x-1] == 1){
-            invertDoors("red");
-            Move("left")
-        } else if(maze[player.y -1][player.x-1] == 2){
-            invertDoors("blue");
-            Move("left")
-        } else if(maze[player.y -1][player.x-1] == 3){
+        if(maze[player.y][player.x-1] == 1){
+            invertDoors("red"); 
+        } else if(maze[player.y][player.x-1] == 2){
+            invertDoors("blue");  
+        } else if(maze[player.y][player.x-1] == 3){
             invertDoors("green");
-            Move("left")
-        }       
+        }   
+        player.x -= 2
+        stepCount += 1;    
     }
     if(input == "right"  && maze[player.y][player.x+1] <= 3  && maze[player.y][player.x+2] == 0)
     {
+        if(maze[player.y][player.x+1] == 1){                   
+            invertDoors("red");
+        } else if(maze[player.y][player.x+1] == 2){
+            invertDoors("blue");
+        } else if(maze[player.y][player.x+1] == 3){
+            invertDoors("green");
+        }
         player.x += 2
         stepCount += 1;
-        if(maze[player.y -1][player.x-1] == 1){            
-            Move("right")            
-            invertDoors("red");
-        } else if(maze[player.y -1][player.x-1] == 2){
-            invertDoors("blue");
-            Move("right")
-        } else if(maze[player.y -1][player.x-1] == 3){
-            invertDoors("green");
-            Move("right")
-        }
     }
     if(input == "up" && maze[player.y-1][player.x] <= 3  && maze[player.y-2][player.x] == 0)
     {
+        if(maze[player.y -1][player.x] == 1){
+            invertDoors("red");
+        } else if(maze[player.y -1][player.x] == 2){
+            invertDoors("blue");
+        } else if(maze[player.y -1][player.x] == 3){
+            invertDoors("green");
+        }
         player.y -= 2
         stepCount += 1;
-        if(maze[player.y -1][player.x-1] == 1){
-            invertDoors("red");
-            Move("up")
-        } else if(maze[player.y -1][player.x-1] == 2){
-            invertDoors("blue");
-            Move("up")
-        } else if(maze[player.y -1][player.x-1] == 3){
-            invertDoors("green");
-            Move("up")
-        }
     }
     if(input == "down" && maze[player.y+1][player.x] <= 3  && maze[player.y+2][player.x] == 0)
     {
+        if(maze[player.y +1][player.x] == 1){
+            invertDoors("red");
+        } else if(maze[player.y +1][player.x] == 2){
+            invertDoors("blue");
+        } else if(maze[player.y +1][player.x] == 3){
+            invertDoors("green");
+        }
         player.y += 2
         stepCount += 1;
-        if(maze[player.y -1][player.x-1] == 1){
-            invertDoors("red");
-            Move("down")
-        } else if(maze[player.y -1][player.x-1] == 2){
-            invertDoors("blue");
-            Move("down")
-        } else if(maze[player.y -1][player.x-1] == 3){
-            invertDoors("green");
-            Move("down")
-        }
     }
     maze[player.y][player.x] = 'P'
     draw(gameBoard, player)
@@ -159,11 +177,12 @@ const Move = (input) => {
         alert(`Level Complete! You took ${stepCount} steps`)
         console.log("You Win!")
     }
-
+    console.log(maze)
+    //debug()
 }
 
 function invertDoors(color){
-    console.log("inverting doors")
+    console.log("inverting", color, "doors")
   
     if (color == "red"){
         console.log("red switch")
@@ -325,7 +344,7 @@ function reDraw(level, player){
 
 //console.log(`${finish.x} ${finish.y}`)
 
-const debug = () => {
+const debug = () => { //affecting the real maze?!!
     var consoleMaze = maze;
     for (let row = 0; row< maze.length; row++) {
         for (let column = 0; column < maze[row].length; column++){
@@ -333,5 +352,7 @@ const debug = () => {
             consoleMaze[row][column] = tile.toString();
         }    
     }
-    console.log(consoleMaze)
+    console.log('numMaze:', consoleMaze)
+    console.log('debug:', consoleMaze)
 }
+console.log(maze)

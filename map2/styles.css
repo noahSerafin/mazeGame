@@ -34,6 +34,7 @@ button{
 }
 .player{
     background-color: lightseagreen;
+    content: 'P';
 }
 .wall, .corner{
     background-color: gray;
@@ -72,15 +73,27 @@ button{
     background-color: lightgreen;
 }
 
-.path{
+.path, .player{
     width: 40px;
     height: 40px;
+}
+.path{
     background-color: lightgray;
 }
+.path.vertical{
+    width: 10px;
+}
+.path.horizontal{
+    height: 10px;
+    
+}
 .tile{
-    border: 1px dotted red;
-  
+   
 }
 .tile:nth-child(2n){
  
+}
+body{
+    background-color: black;
+    color: white;
 }

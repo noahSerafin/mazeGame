@@ -14,46 +14,43 @@ const right = document.getElementById("right");
 
 /*var maze = [
     ['+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', '0', '|', '0', '|', '0', '|', '0', '|'],
+    ['|', 0, '|', 0, '|', 0, '|', 0, '|'],
     ['+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', '0', '|', '0', '|', '0', '|', '0', '|'],
+    ['|', 0, '|', 0, '|', 0, '|', 0, '|'],
     ['+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', '0', '|', '0', '|', '0', '|', '0', '|'],
+    ['|', 0, '|', 0, '|', 0, '|', 0, '|'],
     ['+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', '0', '|', '0', '|', '0', '|', '0', '|'],
+    ['|', 0, '|', 0, '|', 0, '|', 0, '|'],
     ['+', '-', '+', '-', '+', '-', '+', '-', '+']
 ]*/
 var maze = [
     ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|'],
+    ['|', 0, 0, 0, '|', 0, '|', 0, '|', 0, '|', 0, '|'],
+    ['+', 0, '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
+    ['|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|'],
     ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|'],
+    ['|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|'],
     ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|'],
+    ['|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|'],
     ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|'],
+    ['|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|'],
     ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|'],
-    ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
-    ['|', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|'],
+    ['|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|', 0, '|'],
     ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+']
 ]
 
 //player variables
-
-const playerStart = {
-    x: 1,
-    y: 2
-};
-
 var player = {      
     x: 1,
-    y: 2
+    y: 1
     //score: 0
 };
 
+
 //on load
 draw(gameBoard, player);
+console.log(player.x, player.y)
+//console.log(maze);
 
 var input;
 
@@ -92,10 +89,12 @@ left.addEventListener("click", () => {Move("left")})
 right.addEventListener("click", () => {Move("right")})
 
 //move player if valid
-function Move(input){
-    if(input == "left" && player.x > 1 && maze[player.y -1][player.x-2] <= 3)
+const Move = (input) => {
+    debug()
+    maze[player.y][player.x] = 0
+    if(input == "left" && maze[player.y][player.x-1] <= 3 && maze[player.y][player.x-2] == 0)
     {           
-        player.x -= 1
+        player.x -= 2
         stepCount += 1;
         if(maze[player.y -1][player.x-1] == 1){
             invertDoors("red");
@@ -108,9 +107,9 @@ function Move(input){
             Move("left")
         }       
     }
-    if(input == "right"  && player.x < maze[0].length  && maze[player.y -1][player.x] <= 3)
+    if(input == "right"  && maze[player.y][player.x+1] <= 3  && maze[player.y][player.x+2] == 0)
     {
-        player.x += 1
+        player.x += 2
         stepCount += 1;
         if(maze[player.y -1][player.x-1] == 1){            
             Move("right")            
@@ -123,9 +122,9 @@ function Move(input){
             Move("right")
         }
     }
-    if(input == "up" && player.y > 1  && maze[player.y -2][player.x-1] <= 3)
+    if(input == "up" && maze[player.y-1][player.x] <= 3  && maze[player.y-2][player.x] == 0)
     {
-        player.y -= 1
+        player.y -= 2
         stepCount += 1;
         if(maze[player.y -1][player.x-1] == 1){
             invertDoors("red");
@@ -138,9 +137,9 @@ function Move(input){
             Move("up")
         }
     }
-    if(input == "down" && player.y < maze.length && maze[player.y][player.x-1] <= 3)
+    if(input == "down" && maze[player.y+1][player.x] <= 3  && maze[player.y+2][player.x] == 0)
     {
-        player.y += 1
+        player.y += 2
         stepCount += 1;
         if(maze[player.y -1][player.x-1] == 1){
             invertDoors("red");
@@ -153,7 +152,7 @@ function Move(input){
             Move("down")
         }
     }
-
+    maze[player.y][player.x] = 'P'
     draw(gameBoard, player)
     //console.log(`${player.x} ${player.y}`)
     if(player.x == maze[0].length && player.y == maze.length-1){
@@ -224,14 +223,18 @@ loadLevel2.addEventListener('click', () => {reDraw(level2, player)});
 loadLevel3.addEventListener('click',()=> {reDraw(level3, player)});
 //loadLevel4.addEventListener('click',()=> {setLevel(4)});
 
-function piece(tile){
-    switch(tile){                
+function returnPiece(tile){
+    switch(tile){    
+        case 0:
+            return 'path'            
         case 1:                        
             return 'redDoorOpen'
         case 2:
             return 'blueDoorOpen'
         case 3:
            return 'greenDoorOpen'
+        case 4:
+            return 'wall'
         case '-':
             return 'wall'
         case '|':
@@ -246,6 +249,10 @@ function piece(tile){
             return 'greenDoorClosed'
         case '0':
             return 'path'
+        case 'P':
+            return 'player'
+        case 'E':
+            return 'finish'
     }  
 }
 //draw the maze
@@ -254,45 +261,56 @@ function draw(gameBoard, player){
     gameBoard.innerHTML = '';
    //gameBoard.style.gridTemplateRows = "repeat(maze[0].length, 1fr);"
     //gameBoard.style.gridTemplateColumns = "repeat(maze.length, 1fr);"
+
+    //update the player
+    //const playerSquare = document.createElement('div')
+    maze[player.y][player.x] = 'P'
+
+    //draw goal
+    maze[maze[0].length-2][maze.length-1] = 'E'
+    //playerSquare.classList.add('player')
+   
+   
+
     stepCounter.innerHTML = stepCount;
     
-        for (let row = 0; row< maze.length; row++) {
+    for (let row = 0; row< maze.length; row++) {
             for (let column = 0; column < maze[row].length; column++){
-                const tile = maze[row][column];                       
-                const newTile = document.createElement('div');
-                newTile.style.gridRowStart = row +1
-                newTile.style.gridColumnStart = column +1
-                newTile.classList.add(piece(tile));
-                newTile.classList.add('tile');
-                if(row == 0 || row  % 2 == 0){
-                    newTile.classList.add('horizontal')
-                } else {
-                    newTile.classList.add('vertical')
-                }
-                console.log(tile, newTile.classList)
-                gameBoard.appendChild(newTile)
+            var tile = maze[row][column];  
+            if(tile === '-' ||  tile == '|'){
+                tile = 4;
+            }          
+            const newTile = document.createElement('div');
+            newTile.style.gridRowStart = row +1
+            newTile.style.gridColumnStart = column +1
+            newTile.classList.add(returnPiece(tile));
+            newTile.classList.add('tile');
+            if(row == 0 || row  % 2 == 0){
+                newTile.classList.add('horizontal')
+            } else if(column == 0 || column  % 2 == 0 ){
+                newTile.classList.add('vertical')
             }
+            //console.log(tile, newTile.classList)
+            gameBoard.appendChild(newTile)
         }
-    gameBoard.style.height = `${20+(20*(maze.length/4) + 1)+(80*(maze.length/4)-1)}px`
-    gameBoard.style.width = `${20+(20*(maze[0].length/4) + 1)+(80*(maze[0].length/4)-1)}px`
+    }
+    gameBoard.style.height = `${(20*(maze.length/4))+(80*(maze.length/4))-15}px`
+    gameBoard.style.width = `${(20*(maze[0].length/4))+(80*(maze[0].length/4))-15}px`
     /*gameBoard.style.gridTemplateAreas = 
     "c ww c ww c ww c ww c ww"*/
 
     //draw goal
-    const end = document.createElement('div')
-    end.style.gridRowStart = maze.length-1
+   /*const end = document.createElement('div')
+    end.style.gridRowStart = 
     end.style.gridColumnStart = maze[0].length
     end.classList.add('finish')
     end.classList.add('vertical')
-    gameBoard.appendChild(end)
+    gameBoard.appendChild(end)*/
 
     
-    //draw the player
-    const playerSquare = document.createElement('div')
-    playerSquare.style.gridRowStart = player.y    
-    playerSquare.style.gridColumnStart = player.x
-    playerSquare.classList.add('player')
-    gameBoard.appendChild(playerSquare)
+    
+        
+    
 }
 
 //change this so it can load new levels
@@ -300,10 +318,20 @@ function reDraw(level, player){
     console.log("loading level ", level)
     stepCount = 0;
     player.x = 1;   
-    player.y = 2;
+    player.y = 1;
     maze = level;
     draw(gameBoard, player)    
 }
 
 //console.log(`${finish.x} ${finish.y}`)
 
+const debug = () => {
+    var consoleMaze = maze;
+    for (let row = 0; row< maze.length; row++) {
+        for (let column = 0; column < maze[row].length; column++){
+            var tile = maze[row][column];
+            consoleMaze[row][column] = tile.toString();
+        }    
+    }
+    console.log(consoleMaze)
+}

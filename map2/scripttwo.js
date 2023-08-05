@@ -1,3 +1,94 @@
+const player = {
+    x : 1,
+    y : 1
+}
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+
+const createArr = (length) => {
+    var arr = []
+    for (let i = 0; i < length; i++) {
+        arr[i] = 0;
+    }
+    return arr;
+}
+const createGrid = (size) => {
+    const trueSize = (2*size) +1
+    var grid = []
+    for (let row = 0; row < trueSize; row++) {
+        grid.push(createArr(trueSize))
+    }
+    for (let row = 0; row < trueSize; row++) {
+        for (let column = 0; column < trueSize; column++) {
+            if(row % 2 == 0 && column % 2 == 0){
+                grid[row][column] = '+';
+            } else  if(row % 2 !== 0 && column % 2 !== 0){
+                grid[row][column] = 0;
+            } else  if(row % 2 !== 0 && column % 2 == 0){
+                grid[row][column] = '|';
+            } else  if(row % 2 == 0 && column % 2 !== 0){
+                grid[row][column] = '-';
+            }
+        }
+    }
+    return grid;
+}
+
+const drawPath = (size) => {
+
+    let maze = createGrid(size);
+
+    function Move(input){
+        if(input == 1 && maze[player.y][player.x-1] <= 3 && maze[player.y][player.x-2] == 0)
+        {           
+            player.x -= 2
+            stepCount += 1;    
+        }
+        if(input == 2 && maze[player.y][player.x+1] <= 3  && maze[player.y][player.x+2] == 0)
+        {
+            player.x += 2
+            stepCount += 1;
+        }
+        if(input == 3 && maze[player.y-1][player.x] <= 3  && maze[player.y-2][player.x] == 0)
+        {
+            player.y -= 2
+            stepCount += 1;
+        }
+        if(input == 4 && maze[player.y+1][player.x] <= 3  && maze[player.y+2][player.x] == 0)
+        {
+            player.y += 2
+            stepCount += 1;
+        }
+    }
+
+    //let position = inp;
+    let goal = {
+        x: size-1,
+        y: size-1
+    }
+
+    let isFinished = false
+    const trueSize = (2*size) +1
+    for (let row = 0; row < trueSize; row++) {
+        for (let column = 0; column < trueSize; column++) {
+            if(row > 0 && column > 0 && row < trueSize -1 && column < trueSize -1){
+                if(maze[row][column] === '-' || maze[row][column] === '|'){
+                    let r = getRandomInt(8)
+                    console.log(r)
+                    maze[row][column] = r
+                }
+            }
+        }
+    }
+
+
+ return maze
+}
+////endmapgen
+//onsole.log(drawPath(9))
+
 //global variables
 const gameBoard = document.getElementById("game-board");
 var stepCount = 0;
@@ -12,6 +103,7 @@ const down = document.getElementById("down");
 const left = document.getElementById("left");
 const right = document.getElementById("right");
 
+/*var maze =
 var strMaze = [
     ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+'],
     ['|', '0', '0', '0', '|', '0', '|', '0', '|', '0', '|', '0', '|'],
@@ -53,6 +145,13 @@ var maze = [
     ['|', 0, '|', 0, '|', 0, 0, 0, 0, 0, 0, 0, '|'],
     ['+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+', '-', '+']
 ]
+/*maze = [
+    ['+', '-', '+', '-', '+'],
+    ['|', 0, 0, 0, '|'],
+    ['+', 0, '+', 0, '+'],
+    ['|', 0, 0, 0, '|'],
+    ['+', '-', '+', '-', '+']
+]*/
 /*const mazeFromStr = () => {
     var newMaze = strMaze;
     for (let row = 0; row< strMaze.length; row++) {
@@ -69,17 +168,14 @@ var maze = [
 }
 var maze = mazeFromStr();*/
 
-//player variables
-var player = {      
-    x: 1,
-    y: 1
-    //score: 0
-};
+
+console.log(drawPath(6));
+maze = drawPath(6);
 
 
 //on load
 draw(gameBoard, player);
-console.log(player.x, player.y)
+//console.log(player.x, player.y)
 //console.log(maze);
 
 var input;
@@ -177,7 +273,7 @@ const Move = (input) => {
         alert(`Level Complete! You took ${stepCount} steps`)
         console.log("You Win!")
     }
-    console.log(maze)
+    //console.log(maze)
     //debug()
 }
 
@@ -272,6 +368,8 @@ function returnPiece(tile){
             return 'player'
         case 'E':
             return 'finish'
+        case tile > 7:
+            return 'wall'
     }  
 }
 //draw the maze
@@ -294,7 +392,7 @@ function draw(gameBoard, player){
     stepCounter.innerHTML = stepCount;
     
     for (let row = 0; row< maze.length; row++) {
-            for (let column = 0; column < maze[row].length; column++){
+        for (let column = 0; column < maze[row].length; column++){
             var tile = maze[row][column];  
             if(tile === '-' ||  tile == '|'){
                 tile = 4;
@@ -308,16 +406,40 @@ function draw(gameBoard, player){
                 newTile.classList.add('horizontal')
             } else if(column == 0 || column  % 2 == 0 ){
                 newTile.classList.add('vertical')
+            } else{
+                newTile.classList.add('full')
             }
             //console.log(tile, newTile.classList)
             gameBoard.appendChild(newTile)
         }
     }
-    gameBoard.style.height = `${(20*(maze.length/4))+(80*(maze.length/4))-15}px`
-    gameBoard.style.width = `${(20*(maze[0].length/4))+(80*(maze[0].length/4))-15}px`
-    /*gameBoard.style.gridTemplateAreas = 
-    "c ww c ww c ww c ww c ww"*/
+    //gameBoard.style.width = `${(20*(maze[0].length/4))+(80*(maze[0].length/4))-15}px`
+    
+    gameBoard.style.height =  `${(40* ((maze[0].length-1)/2)) + (10* (((maze[0].length-1)/2)+1) )}px`
+    gameBoard.style.width = `${(40* ((maze[0].length-1)/2)) + (10* (((maze[0].length-1)/2)+1) )}px`
+    console.log((maze[0].length));
+    const wides = (maze[0].length-1)/2;
+    const shorts = ((maze[0].length-1)/2+1);
+    const segmentWidth = 100 / ((wides * 4) + shorts)
+    console.log(segmentWidth);//.toFixed(2));
 
+    const fullTiles = document.querySelectorAll('.full');
+    const corners = document.querySelectorAll('.corner');
+    const verts = document.querySelectorAll('.vertical');
+    const horizs = document.querySelectorAll('.horizontal');
+    fullTiles.forEach(tile => {
+        tile.style.width = `${(segmentWidth*4)}%`
+    });
+    corners.forEach(tile => {
+        tile.style.width = `${(segmentWidth)}%`
+        tile.style.height = `${(segmentWidth)}%`
+    });
+    verts.forEach(tile => {
+        tile.style.width = `${(segmentWidth)}%`
+    });
+    horizs.forEach(tile => {
+        tile.style.height = `${(segmentWidth)}%`
+    });
     //draw goal
    /*const end = document.createElement('div')
     end.style.gridRowStart = 
@@ -325,11 +447,6 @@ function draw(gameBoard, player){
     end.classList.add('finish')
     end.classList.add('vertical')
     gameBoard.appendChild(end)*/
-
-    
-    
-        
-    
 }
 
 //change this so it can load new levels

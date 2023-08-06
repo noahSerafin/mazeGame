@@ -227,8 +227,8 @@ const Move = (input) => {
     }
     maze[player.y][player.x] = 'P'
 
-    //draw(gameBoard, player) //draw on movement
-    reRender(gameBoard.childNodes, maze) //draw on movement
+    draw(gameBoard, player) //draw on movement
+    //reRender(gameBoard.childNodes, maze) //draw on movement
 
     //console.log(`${player.x} ${player.y}`)
     if(player.x == maze[0].length && player.y == maze.length-1){

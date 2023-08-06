@@ -278,7 +278,7 @@ const Move = (input) => {
 }
 
 function invertDoors(color){
-    console.log("inverting", color, "doors")
+    console.log("inverting ", color, " doors")
   
     if (color == "red"){
         console.log("red switch")
@@ -376,19 +376,11 @@ function returnPiece(tile){
 function draw(gameBoard, player){
     
     gameBoard.innerHTML = '';
-   //gameBoard.style.gridTemplateRows = "repeat(maze[0].length, 1fr);"
-    //gameBoard.style.gridTemplateColumns = "repeat(maze.length, 1fr);"
-
-    //update the player
-    //const playerSquare = document.createElement('div')
     maze[player.y][player.x] = 'P'
 
     //draw goal
     maze[maze[0].length-2][maze.length-1] = 'E'
-    //playerSquare.classList.add('player')
-   
-   
-
+    
     stepCounter.innerHTML = stepCount;
     
     for (let row = 0; row< maze.length; row++) {
@@ -416,15 +408,14 @@ function draw(gameBoard, player){
             gameBoard.appendChild(newTile)
         }
     }
-    //gameBoard.style.width = `${(20*(maze[0].length/4))+(80*(maze[0].length/4))-15}px`
     
     //gameBoard.style.height =  `${(40* ((maze[0].length-1)/2)) + (10* (((maze[0].length-1)/2)+1) )}px`
     //gameBoard.style.width = `${(40* ((maze[0].length-1)/2)) + (10* (((maze[0].length-1)/2)+1) )}px`
-    console.log((maze[0].length));
+    //console.log((maze[0].length));
     const wides = (maze[0].length-1)/2;
     const shorts = ((maze[0].length-1)/2+1);
     const segmentWidth = 100 / ((wides * 4) + shorts)
-    console.log(segmentWidth);//.toFixed(2));
+    //console.log(segmentWidth);//.toFixed(2));
 
     const fullTiles = document.querySelectorAll('.full');
     const corners = document.querySelectorAll('.corner');
@@ -452,6 +443,22 @@ function draw(gameBoard, player){
     end.classList.add('finish')
     end.classList.add('vertical')
     gameBoard.appendChild(end)*/
+}
+const reRender = (maze, gameBoard) => {
+    //compare maze to last move, only update new tiles/player
+    for (let row = 0; row< maze.length; row++) {
+        let i = 0
+        for (let column = 0; column < maze[row].length; column++){
+            if (gameBoard.childNodes[i].classList.contains(`${row},${column}`) && gameBoard.childNodes[i].classList.contains(maze[row][column])){
+                //tile is the same
+                console.log(maze[row][column]);
+                console.log(i)
+            } else{
+                //tile is different, update classlist
+            }
+            i++
+        }
+    }
 }
 
 //change this so it can load new levels

@@ -170,7 +170,7 @@ var maze = mazeFromStr();*/
 
 
 console.log(drawPath(6));
-maze = drawPath(6);
+maze = drawPath(9);
 
 
 //on load
@@ -394,10 +394,13 @@ function draw(gameBoard, player){
     for (let row = 0; row< maze.length; row++) {
         for (let column = 0; column < maze[row].length; column++){
             var tile = maze[row][column];  
+            const newTile = document.createElement('div');
+            if(!isNaN(tile) && tile !== 4 && tile !== 0){
+                newTile.classList.add('door')
+            }
             if(tile === '-' ||  tile == '|'){
                 tile = 4;
             }          
-            const newTile = document.createElement('div');
             newTile.style.gridRowStart = row +1
             newTile.style.gridColumnStart = column +1
             newTile.classList.add(returnPiece(tile));
@@ -415,8 +418,8 @@ function draw(gameBoard, player){
     }
     //gameBoard.style.width = `${(20*(maze[0].length/4))+(80*(maze[0].length/4))-15}px`
     
-    gameBoard.style.height =  `${(40* ((maze[0].length-1)/2)) + (10* (((maze[0].length-1)/2)+1) )}px`
-    gameBoard.style.width = `${(40* ((maze[0].length-1)/2)) + (10* (((maze[0].length-1)/2)+1) )}px`
+    //gameBoard.style.height =  `${(40* ((maze[0].length-1)/2)) + (10* (((maze[0].length-1)/2)+1) )}px`
+    //gameBoard.style.width = `${(40* ((maze[0].length-1)/2)) + (10* (((maze[0].length-1)/2)+1) )}px`
     console.log((maze[0].length));
     const wides = (maze[0].length-1)/2;
     const shorts = ((maze[0].length-1)/2+1);
@@ -430,14 +433,16 @@ function draw(gameBoard, player){
     fullTiles.forEach(tile => {
         tile.style.width = `${(segmentWidth*4)}%`
     });
-    corners.forEach(tile => {
-        tile.style.width = `${(segmentWidth)}%`
-        tile.style.height = `${(segmentWidth)}%`
-    });
     verts.forEach(tile => {
         tile.style.width = `${(segmentWidth)}%`
+        tile.style.height = `${(segmentWidth*4)}%`
     });
     horizs.forEach(tile => {
+        tile.style.width = `${(segmentWidth*4)}%`
+        tile.style.height = `${(segmentWidth)}%`
+    });
+    corners.forEach(tile => {
+        tile.style.width = `${(segmentWidth)}%`
         tile.style.height = `${(segmentWidth)}%`
     });
     //draw goal

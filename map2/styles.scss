@@ -13,8 +13,8 @@ main{
     flex-direction: column;
 }
 button{
-    padding: 5px;
-    margin: 5px;
+    padding: 10px;
+    margin: 10px;
 }
 .instructions {
     width: 100vmin;
@@ -152,4 +152,10 @@ div{
 body{
     background-color: black;
     color: white;
+}
+.redDoorOpen::before,.blueDoorOpen::before,.greenDoorOpen::before{
+    box-shadow: 1px 1px 2px 2px darkgray inset;
+}
+.instructions{
+    margin-bottom: 4rem;
 }

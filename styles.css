@@ -1,55 +1,132 @@
-header{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 50%;
-    margin: auto;
+header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 50%;
+  margin: auto;
 }
-button{
-    padding: 5px;
-    margin: 5px;
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
+
+button {
+  padding: 10px;
+  margin: 10px;
+}
+
 .instructions {
-    width: 100vmin;
-    margin: auto;
-    display: flex;
-    justify-content: space-around;
+  width: 100vmin;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
 }
-.control-up{
-    display: flex;
-    justify-content: center;
+
+.control-up {
+  display: flex;
+  justify-content: center;
 }
-#game-board{
-    background-color: lightgray;
-    width: 100vmin;
-    height: 100vmin;
-    display: grid;
-    margin: auto;
+
+div {
+  display: block;
 }
-.player{
-    background-color: lightseagreen;
+
+#game-board {
+  width: 90vmin;
+  height: 90vmin;
+  display: flex;
+  flex-wrap: wrap;
 }
-.wall{
-    background-color: gray;
+
+.player {
+  background-color: lightseagreen;
+  content: "P";
 }
-.finish{
-    background-color: yellow;
+
+.wall, .corner {
+  background-color: gray;
 }
-.redDoorClosed{
-    background-color: red;   
+
+.finish {
+  background-color: yellow;
 }
-.redDoorOpen{
-    background-color: tomato;
+
+.redDoorClosed, .redDoorOpen {
+  background-color: red;
 }
-.blueDoorClosed{
-    background-color: blue;   
+.redDoorClosed::before, .redDoorClosed::after, .redDoorOpen::before, .redDoorOpen::after {
+  background-color: red;
 }
-.blueDoorOpen{
-    background-color: lightskyblue;
+
+.blueDoorClosed, .blueDoorOpen {
+  background-color: blue;
 }
-.greenDoorClosed{
-    background-color: green;   
+.blueDoorClosed::before, .blueDoorClosed::after, .blueDoorOpen::before, .blueDoorOpen::after {
+  background-color: blue;
 }
-.greenDoorOpen{
-    background-color: lightgreen;
+
+.greenDoorClosed, .greenDoorOpen {
+  background-color: green;
 }
+.greenDoorClosed::before, .greenDoorClosed::after, .greenDoorOpen::before, .greenDoorOpen::after {
+  background-color: green;
+}
+
+.door {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.door::before {
+  content: "";
+  background-color: lightgray;
+  transition: all 0.5s ease-in-out;
+}
+.door.horizontal::before {
+  position: absolute;
+  background-color: lightgrey;
+  height: 100%;
+  width: 80%;
+}
+.door.vertical::before {
+  height: 80%;
+  width: 100%;
+}
+
+.redDoorClosed.horizontal::before, .blueDoorClosed.horizontal::before, .greenDoorClosed.horizontal::before {
+  height: 0%;
+  width: 0%;
+}
+.redDoorClosed.vertical::before, .redDoorClosed.vertical::after, .blueDoorClosed.vertical::before, .blueDoorClosed.vertical::after, .greenDoorClosed.vertical::before, .greenDoorClosed.vertical::after {
+  height: 0%;
+  width: 0%;
+}
+
+.path {
+  background-color: lightgray;
+}
+
+.path.vertical {
+  width: 10px;
+}
+
+.path.horizontal {
+  height: 10px;
+}
+
+body {
+  background-color: black;
+  color: white;
+}
+
+.redDoorOpen::before, .blueDoorOpen::before, .greenDoorOpen::before {
+  box-shadow: 1px 1px 2px 2px darkgray inset;
+}
+
+.instructions {
+  margin-bottom: 4rem;
+}/*# sourceMappingURL=styles.css.map */

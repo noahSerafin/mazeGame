@@ -5,12 +5,6 @@ header{
     width: 50%;
     margin: auto;
 }
-main{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
 button{
     padding: 5px;
     margin: 5px;
@@ -26,36 +20,17 @@ button{
     justify-content: center;
 }
 #game-board{
-   
-    width: 90vmin;
-    height: 90vmin;
-    display: flex;
-    flex-wrap: wrap;
-}
-#game-board:nth-child(2n){
-    
-}
-.board__row:nth-child(2n){
-
+    background-color: lightgray;
+    width: 100vmin;
+    height: 100vmin;
+    display: grid;
+    margin: auto;
 }
 .player{
     background-color: lightseagreen;
-    content: 'P';
 }
-.wall, .corner{
+.wall{
     background-color: gray;
-}
-.horizontal{
-    height: 10px;
-    width: 40px;
-}
-.vertical{
-    width: 10px;
-    height: 40px;
-}
-.corner{
-    height: 10px;
-    width: 10px;
 }
 .finish{
     background-color: yellow;
@@ -77,32 +52,4 @@ button{
 }
 .greenDoorOpen{
     background-color: lightgreen;
-}
-
-.path, .player{
-    width: 40px;
-    height: 40px;
-}
-.path{
-    background-color: lightgray;
-}
-.path.vertical{
-    width: 10px;
-}
-.path.horizontal{
-    height: 10px;
-    
-}
-.tile{
-   
-}
-.tile:nth-child(2n){
- 
-}
-body{
-    background-color: black;
-    color: white;
-}
-.full{
-    box-shadow: 1px 1px 2px 2px darkgray inset;
 }

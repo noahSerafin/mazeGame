@@ -295,9 +295,9 @@ function switchGreenDoors(tile){
     }   
 }
 
-startButton.addEventListener('click', ()=> {reDraw(level1, player)});
-loadLevel2.addEventListener('click', () => {reDraw(level2, player)});
-loadLevel3.addEventListener('click',()=> {reDraw(level3, player)});
+//startButton.addEventListener('click', ()=> {reDraw(level1, player)});
+//loadLevel2.addEventListener('click', () => {reDraw(level2, player)});
+//loadLevel3.addEventListener('click',()=> {reDraw(level3, player)});
 //loadLevel4.addEventListener('click',()=> {setLevel(4)});
 
 function returnPiece(tile){
@@ -437,7 +437,9 @@ console.log(maze)
 const refresh = document.getElementById("refresh");
 const save = document.getElementById("save");
 
-refresh.addEventListener("click", () => {reDraw(thisMaze, player)})
+refresh.addEventListener("click", () => {
+    reDraw(thisMaze, player)
+})
 save.addEventListener('click', () => {
     console.log(maze);
 })

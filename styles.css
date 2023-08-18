@@ -15,7 +15,7 @@ main {
 
 button {
   padding: 10px;
-  margin: 10px;
+  margin: 7px;
 }
 
 .instructions {
@@ -23,6 +23,14 @@ button {
   margin: auto;
   display: flex;
   justify-content: space-around;
+}
+
+.controls .controls__bottom {
+  display: flex;
+}
+
+#bottom {
+  margin-top: 1rem;
 }
 
 .control-up {

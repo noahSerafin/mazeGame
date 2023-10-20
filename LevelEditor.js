@@ -1,5 +1,3 @@
-console.log('hello');
-
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
@@ -10,11 +8,11 @@ function getRandomOddInt(max) {
     }
     return num;
 }
+const playerY = getRandomOddInt(15);
 const player = {
     x : 1,
-    y : getRandomOddInt(15)
+    y : playerY
 }
-console.log(player.y)
 
 const createArr = (length) => {
     var arr = []

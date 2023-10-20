@@ -12,6 +12,9 @@ main{
     align-items: center;
     flex-direction: column;
 }
+a{
+    margin-bottom: 1rem;
+}
 button{
     padding: 10px;
     margin: 7px;
@@ -23,16 +26,19 @@ button{
     justify-content: space-around;
 }
 .controls{
-    .controls__bottom{
-        display: flex;
+    display: flex;
+    align-items: center;
+    .control-up{
+        button{
+            display: block;
+        }
     }
+}
+#up{
+    margin-bottom: 1rem;
 }
 #bottom{
     margin-top: 1rem;
-}
-.control-up{
-    display: flex;
-    justify-content: center;
 }
 div{
     display: block;
@@ -126,14 +132,14 @@ div{
 .redDoorClosed,.blueDoorClosed,.greenDoorClosed{
     &.horizontal{
         &::before{
-            height: 0%;
+            height: 100%;
             width: 0%;
         }
     }
     &.vertical{
         &::before, &::after{
             height: 0%;
-            width: 0%;
+            width: 100%;
         }
     }
 }
@@ -165,7 +171,16 @@ body{
     box-shadow: 1px 1px 2px 2px darkgray inset;
 }
 .instructions{
-    margin-bottom: 4rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    h4, div, button{
+        flex: 1;
+    }
+    div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 #refresh{
     margin-top: 1rem;

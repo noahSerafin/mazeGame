@@ -1,11 +1,20 @@
-const player = {
-    x : 1,
-    y : 1
-}
+console.log('hello');
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
+function getRandomOddInt(max) {
+    num = 2; 
+    while (num % 2 == 0) {
+        num = Math.floor(Math.random() * max);
+    }
+    return num;
+}
+const player = {
+    x : 1,
+    y : getRandomOddInt(15)
+}
+console.log(player.y)
 
 const createArr = (length) => {
     var arr = []
@@ -368,7 +377,7 @@ function draw(gameBoard, player){
             }
             //console.log(tile, newTile.classList)
             newTile.id = `${row} ${column}`;
-            gameBoard.appendChild(newTile)
+            gameBoard.appendChild(newTile)//doesn't work in editor!!
             i++
         }
     }
@@ -414,7 +423,8 @@ function reDraw(level, player){
     console.log("loading level ", level)
     stepCount = 0;
     player.x = 1;   
-    player.y = 1;
+    player.y = getRandomOddInt(15);
+    console.log(player.y);
     maze = level;
     draw(gameBoard, player)    
 }

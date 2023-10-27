@@ -19,18 +19,22 @@
     
     <main>       
         Level Editor (Beta) <a style="color: white;" href='./originalMaze/index.html'>Visit the original game</a>
-        <div id= "game-board"></div>
-        <div class="controls">
-            <button id="left"><</button>
-            <div class="control-up">
-                <button id="up">^</button>         
-                <button id="down">v</button>
+        <div class="wrap rel">
+            <div id= "game-board"></div>
+            <div class="flex">
+                <div class="controls flex">
+                    <button id="left"><</button>
+                    <div class="control-up">
+                        <button id="up">^</button>         
+                        <button id="down">v</button>
+                    </div>
+                    <button id="right">></button>  
+                </div>
+                <button id="refresh">start over</button>
             </div>
-            <button id="right">></button>  
         </div>
         <div class="instructions">
             <h4>WASD to move, or:</h4>
-            <button id="refresh">start over</button>
             <div>
                 Steps: <div id="counter"></div>
             </div>

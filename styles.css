@@ -13,6 +13,13 @@ main {
   flex-direction: column;
 }
 
+.flex {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 a {
   margin-bottom: 1rem;
 }
@@ -30,11 +37,18 @@ button {
 }
 
 .controls {
+  flex: 5;
   display: flex;
   align-items: center;
 }
 .controls .control-up button {
   display: block;
+}
+
+#refresh {
+  float: right;
+  position: absolute;
+  right: 0;
 }
 
 #up {

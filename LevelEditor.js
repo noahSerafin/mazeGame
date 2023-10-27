@@ -421,8 +421,7 @@ function reDraw(level, player){
     console.log("loading level ", level)
     stepCount = 0;
     player.x = 1;   
-    player.y = getRandomOddInt(15);
-    console.log(player.y);
+    player.y = playerY;
     maze = level;
     draw(gameBoard, player)    
 }
